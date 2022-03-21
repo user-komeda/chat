@@ -10,9 +10,7 @@ import javax.validation.constraints.Pattern;
 @Data
 public class UserBody {
 
-  @NotBlank
-  @Email
-  private String email;
+  @NotBlank @Email private String email;
 
   @NotBlank
   @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\-]{8,}$")

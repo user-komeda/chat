@@ -12,16 +12,15 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity {
-@Id
-private  int Id;
+  @Id private int Id;
 
   private String email;
 
   private String password;
 
   public UserEntity(String email, String password) {
-    this.email=email;
-    this.password=password;
+    this.email = email;
+    this.password = password;
   }
 
   public User toDomainUser() {
