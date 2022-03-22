@@ -71,4 +71,9 @@ spotbugs {
 tasks.named('test') {
     useJUnitPlatform()
 }
-apply from: "$projectDir/gradle/preCommit.gradle"
+task installLocalGitHook(type: Copy) {
+    from new File(rootProject.rootDir, 'scripts/pre-commit')
+    into { new File(rootProject.rootDir, '.git/hooks') }
+    fileMode 0775
+}
+build.dependsOn installLocalGitHook
