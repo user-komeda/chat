@@ -7,22 +7,38 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+/** userEntityClass. */
 @Data
 @Table("chat_user")
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity {
-  @Id private int Id;
 
+  /** id. */
+  @Id private long id;
+
+  /** email. */
   private String email;
 
+  /** password. */
   private String password;
 
-  public UserEntity(String email, String password) {
+  /**
+   * コンストラクタ.
+   *
+   * @param email email.
+   * @param password password.
+   */
+  public UserEntity(final String email, final String password) {
     this.email = email;
     this.password = password;
   }
 
+  /**
+   * domainのUserClassへの変換堀.
+   *
+   * @return com.example.chat.infrastructure.entity.UserEntity
+   */
   public User toDomainUser() {
     return new User(this.email, this.password);
   }

@@ -9,15 +9,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+/** UserRepository実装Class. */
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
+  /** UserJdbcRepository. */
   @NonNull private UserJdbcRepository userJdbcRepository;
-  @Autowired PasswordEncoder passwordEncoder;
 
+  /** PasswordEncoder. */
+  @Autowired private PasswordEncoder passwordEncoder;
+
+  /**
+   * ユーザ情報東麓.
+   *
+   * @param user user
+   * @return 東麓結果
+   */
   @Override
-  public User save(User user) {
+  public User save(final User user) {
     return this.userJdbcRepository
         .save(new UserEntity(user.getEmail(), passwordEncoder.encode(user.getPassword())))
         .toDomainUser();
