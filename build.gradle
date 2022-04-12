@@ -40,6 +40,8 @@ dependencies {
 checkstyle {
     configFile file('./src/main/resources/checkstyle.xml')
     toolVersion = '10.0'
+    ignoreFailures = false
+    maxWarnings = 0
 }
 
 pmd {
@@ -50,6 +52,7 @@ pmd {
 }
 
 spotbugs {
+    ignoreFailures = false
     showStackTraces = true
     showProgress = true
     effort = 'default'

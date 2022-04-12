@@ -1,12 +1,12 @@
 package com.example.chat;
 
-import lombok.experimental.UtilityClass;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 /** chatApplication. */
-@UtilityClass
-@SpringBootApplication
+@EnableAutoConfiguration
+@ComponentScan
 public final class ChatApplication {
 
   /**
