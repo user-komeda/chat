@@ -10,6 +10,12 @@ import lombok.Data;
 @Data
 public class UserBody {
 
+  /** id. */
+  private Long id;
+
+  /** roomId. */
+  private Long roomId;
+
   /** email. */
   @NotBlank @Email private String email;
 
@@ -18,12 +24,15 @@ public class UserBody {
   @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\-]{8,}$")
   private String password;
 
+  /** userName. */
+  private String userName;
+
   /**
    * domain userClassに変換.
    *
    * @return 返還後のuserObject
    */
   public User toDomainUser() {
-    return new User(this.email, this.password);
+    return new User(this.id, this.roomId, this.email, this.password, this.userName);
   }
 }

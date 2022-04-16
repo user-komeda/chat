@@ -46,7 +46,7 @@ checkstyle {
 
 pmd {
     consoleOutput = true
-
+    ignoreFailures = false
     toolVersion = "6.43.0"
     ruleSetFiles = files("/src/main/resources/pmd.xml")
 }
