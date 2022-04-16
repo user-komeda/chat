@@ -29,12 +29,7 @@ public class UserRepositoryImpl implements UserRepository {
   @Override
   public User save(final User user) {
     return this.userJdbcRepository
-        .save(
-            new UserEntity(
-                null,
-                user.getEmail(),
-                passwordEncoder.encode(user.getPassword()),
-                user.getUserName()))
+        .save(new UserEntity(user.getEmail(), passwordEncoder.encode(user.getPassword())))
         .toDomainUser();
   }
 }
