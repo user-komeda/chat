@@ -1,6 +1,9 @@
 package com.example.chat.apprication.controller;
 
 import com.example.chat.apprication.resource.MessageBody;
+import com.example.chat.domain.object.Message;
+import com.example.chat.domain.service.MessageService;
+import java.util.List;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -8,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /** MessageController. */
@@ -19,6 +23,9 @@ public class MessageController {
   /** SimpMessagingTemplate. */
   @Autowired private SimpMessagingTemplate simpMessagingTemplate;
 
+  /** SaveMessageService . */
+  @Autowired private MessageService messageService;
+
   /**
    * ルームあてのメッセージを処理.
    *
@@ -26,8 +33,9 @@ public class MessageController {
    * @return クライアントにメッセージを返却
    */
   @MessageMapping("/{id}/messages")
-  @SendTo("/channels/1")
+  @SendTo("/topic/{id}/messages")
   public String sendMessage(final MessageBody body) {
+    messageService.saveMessage(body.toDomainMessage());
     return body.getMessage();
   }
 
@@ -38,6 +46,17 @@ public class MessageController {
    */
   @MessageMapping("{id}/users/{userName}/messages")
   public void sendPrivateMessage(final MessageBody body) {
+    messageService.saveMessage(body.toDomainMessage());
     simpMessagingTemplate.convertAndSendToUser(body.getUserName(), "/msg", body);
+  }
+
+  /**
+   * メッセージ一覧の取得.
+   *
+   * @return メッセージ一覧
+   */
+  @GetMapping("/message")
+  public List<Message> getAllMessage() {
+    return messageService.getAllMessage();
   }
 }
