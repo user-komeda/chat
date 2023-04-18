@@ -3,6 +3,7 @@ package com.example.chat.apprication.controller;
 import com.example.chat.apprication.resource.RoomBody;
 import com.example.chat.domain.object.Room;
 import com.example.chat.domain.service.RoomService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import java.util.Optional;
 import lombok.NoArgsConstructor;
@@ -55,7 +56,8 @@ public class RoomController {
    * @param roomBody roomBody
    */
   @PostMapping("/create")
-  public ResponseEntity<String> createRoom(@RequestBody final RoomBody roomBody) {
+  public ResponseEntity<String> createRoom(@RequestBody final RoomBody roomBody)
+      throws JsonProcessingException {
     return roomService.createRoom(roomBody);
   }
 
