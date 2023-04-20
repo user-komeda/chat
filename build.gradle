@@ -4,7 +4,7 @@ plugins {
     id 'java'
     id 'checkstyle'
     id 'pmd'
-    id "com.github.spotbugs" version "5.0.6"
+    id "com.github.spotbugs" version "5.0.14"
 }
 
 group = 'com.example'
