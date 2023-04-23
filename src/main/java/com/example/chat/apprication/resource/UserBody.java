@@ -6,25 +6,41 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.Data;
 
-/** userRequestObject. */
+/**
+ * userRequestObject.
+ */
 @Data
 public class UserBody {
 
-  /** id. */
+  /**
+   * id.
+   */
   private Long id;
 
-  /** roomId. */
+  /**
+   * roomId.
+   */
+  @NotBlank
   private Long roomId;
 
-  /** email. */
-  @NotBlank @Email private String email;
+  /**
+   * email.
+   */
+  @NotBlank
+  @Email
+  private String email;
 
-  /** password. */
+  /**
+   * password.
+   */
   @NotBlank
   @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\-]{8,}$")
   private String password;
 
-  /** userName. */
+  /**
+   * userName.
+   */
+  @NotBlank
   private String userName;
 
   /**

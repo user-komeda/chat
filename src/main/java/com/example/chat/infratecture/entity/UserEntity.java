@@ -8,46 +8,56 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-/** userEntityClass. */
+/**
+ * userEntityClass.
+ */
 @Data
 @Table("chat_user")
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity {
 
-  /** id. */
-  @Id private long id;
+  /**
+   * id.
+   */
+  @Id
+  private long id;
 
-  /** roomId. */
+  /**
+   * roomId.
+   */
   @Column("roomId")
   private Long roomId;
 
-  /** email. */
+  /**
+   * email.
+   */
   private String email;
 
-  /** password. */
+  /**
+   * password.
+   */
   private String password;
 
-  /** userName. */
+  /**
+   * userName.
+   */
   @Column("userName")
   private String userName;
 
   /**
-   * コンストラクタ.
+   * 変換処理.
    *
-   * @param email email.
-   * @param password password.
+   * @param user user
+   * @return userEntity
    */
-  public UserEntity(
-      final Long roomId, final String email, final String password, final String userName) {
-    this.roomId = roomId;
-    this.email = email;
-    this.password = password;
-    this.userName = userName;
+  public static UserEntity buildUserEntity(final User user) {
+    return new UserEntity(user.getId(), user.getRoomId(), user.getEmail(), user.getPassword(),
+        user.getUserName());
   }
 
   /**
-   * domainのUserClassへの変換堀.
+   * domainのUserClassへの変換処理.
    *
    * @return com.example.chat.infrastructure.entity.UserEntity
    */

@@ -5,11 +5,13 @@ import com.example.chat.domain.object.User;
 import com.example.chat.domain.service.RoomMemberService;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,15 +21,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-/** RoomMemberController. */
+/**
+ * RoomMemberController.
+ */
 @RestController
 @NoArgsConstructor
 @RequestMapping("/room/{roomId}/member")
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
+@Validated
 public class RoomMemberController {
 
-  /** RoomMemberService. */
-  @Autowired private transient RoomMemberService roomMemberService;
+  /**
+   * RoomMemberService.
+   */
+  @Autowired
+  private transient RoomMemberService roomMemberService;
 
   /**
    * ルーム内のメンバー一覧を取得.
@@ -45,7 +53,7 @@ public class RoomMemberController {
    * ルーム内の指定したメンバーを取得.
    *
    * @param roomId roomId
-   * @param id id
+   * @param id     id
    * @return user
    */
   @GetMapping("/{id}")
@@ -58,12 +66,13 @@ public class RoomMemberController {
   /**
    * ルーム内にメンバー東麓.
    *
-   * @param roomId roomId
+   * @param roomId   roomId
    * @param userBody userBody
    */
   @PostMapping("/add")
   @ResponseStatus(HttpStatus.CREATED)
-  public void addRoomMember(@PathVariable final Long roomId, @RequestBody final UserBody userBody) {
+  public void addRoomMember(@PathVariable final Long roomId,
+      @Valid @RequestBody final UserBody userBody) {
     roomMemberService.addRoomMember(roomId, userBody.toDomainUser());
   }
 

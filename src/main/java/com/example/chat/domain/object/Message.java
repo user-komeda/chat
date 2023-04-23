@@ -5,25 +5,46 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
-/** Message. */
+/**
+ * Message.
+ */
 @AllArgsConstructor
 @Data
 public class Message {
-  /** id. */
-  @Id private Long id;
 
-  /** message. */
-  private String messageText;
+  /**
+   * id.
+   */
+  @Id
+  private Long id;
 
-  /** sender. */
-  private String sender;
-
-  /** roomId. */
+  /**
+   * roomId.
+   */
   private Long roomId;
 
-  /** sendTime. */
+  /**
+   * message.
+   */
+  private String message;
+
+  /**
+   * sender.
+   */
+  private String sender;
+
+  /**
+   * destinationUser.
+   */
+  private String destinationUser;
+
+  /**
+   * sendTime.
+   */
   private Date sendTime;
 
-  /** updateMessageFlag. */
+  /**
+   * updateMessageFlag.
+   */
   private boolean updateMessageFlag;
 }

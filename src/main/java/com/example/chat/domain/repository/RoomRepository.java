@@ -1,11 +1,12 @@
 package com.example.chat.domain.repository;
 
-import com.example.chat.apprication.resource.RoomBody;
 import com.example.chat.domain.object.Room;
 import java.util.List;
 import java.util.Optional;
 
-/** RoomRepository. */
+/**
+ * RoomRepository.
+ */
 public interface RoomRepository {
 
   /**
@@ -26,17 +27,17 @@ public interface RoomRepository {
   /**
    * room作成.
    *
-   * @param roomBody roomBody
+   * @param room room
    */
-  void save(RoomBody roomBody);
+  Room save(Room room);
 
   /**
    * room編集.
    *
-   * @param id id
-   * @param roomBody roomBody
+   * @param id   id
+   * @param room room
    */
-  void save(Long id, RoomBody roomBody);
+  Room save(Long id, Room room);
 
   /**
    * room削除.
