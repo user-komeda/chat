@@ -2,7 +2,9 @@ package com.example.chat.domain.repository;
 
 import com.example.chat.domain.object.User;
 
-/** UserRepository. */
+/**
+ * UserRepository.
+ */
 public interface UserRepository {
 
   /**

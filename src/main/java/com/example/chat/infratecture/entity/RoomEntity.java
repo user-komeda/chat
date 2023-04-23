@@ -7,18 +7,35 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-/** roomEntity. */
+/**
+ * roomEntity.
+ */
 @Data
 @Table("chat_room")
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomEntity {
 
-  /** id. */
-  @Id private Long id;
+  /**
+   * id.
+   */
+  @Id
+  private Long id;
 
-  /** roomName. */
+  /**
+   * roomName.
+   */
   private String roomName;
+
+  /**
+   * 変換処理.
+   *
+   * @param room room
+   * @return roomEntity
+   */
+  public static RoomEntity buildRoomEntity(final Room room) {
+    return new RoomEntity(room.getId(), room.getRoomName());
+  }
 
   /**
    * 変換処理.

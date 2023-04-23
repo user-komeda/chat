@@ -3,14 +3,21 @@ package com.example.chat.domain.object;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-/** Room object. */
+/**
+ * Room object.
+ */
 @Data
 @AllArgsConstructor
 public class Room {
 
-  /** id. */
+  /**
+   * id.
+   */
   private Long id;
 
-  /** roomName. */
+  /**
+   * roomName.
+   */
   private String roomName;
+
 }

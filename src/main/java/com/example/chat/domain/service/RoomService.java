@@ -1,10 +1,8 @@
 package com.example.chat.domain.service;
 
-import com.example.chat.apprication.resource.RoomBody;
 import com.example.chat.domain.object.Room;
 import com.example.chat.domain.repository.RoomRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import java.util.Optional;
 import lombok.NoArgsConstructor;
@@ -13,13 +11,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-/** roomService. */
+/**
+ * roomService.
+ */
 @NoArgsConstructor
 @Service
 public class RoomService {
 
-  /** RoomRepository/. */
-  @Autowired private transient RoomRepository roomRepository;
+  /**
+   * RoomRepository/.
+   */
+  @Autowired
+  private transient RoomRepository roomRepository;
 
   /**
    * room一覧取得.
@@ -44,25 +47,25 @@ public class RoomService {
   /**
    * room作成.
    *
-   * @param roomBody roomBody
+   * @param room room
    * @return ResponseEntity
    */
-  public ResponseEntity<String> createRoom(final RoomBody roomBody) throws JsonProcessingException {
-    roomRepository.save(roomBody);
+  public ResponseEntity<Room> createRoom(final Room room) throws JsonProcessingException {
+    final Room createdRoom = roomRepository.save(room);
     return ResponseEntity.status(HttpStatus.CREATED)
-        .body(new ObjectMapper().writeValueAsString(roomBody));
+        .body(createdRoom);
   }
 
   /**
    * room編集.
    *
-   * @param id id
-   * @param roomBody roomBody
+   * @param id   id
+   * @param room room
    * @return ResponseEntity
    */
-  public ResponseEntity<String> editRoomById(final Long id, final RoomBody roomBody) {
-    roomRepository.save(id, roomBody);
-    return ResponseEntity.status(HttpStatus.CREATED).body("SUCCESS");
+  public ResponseEntity<Room> editRoomById(final Long id, final Room room) {
+    final Room updatedRoom = roomRepository.save(id, room);
+    return ResponseEntity.status(HttpStatus.CREATED).body(updatedRoom);
   }
 
   /**

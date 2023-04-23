@@ -8,29 +8,49 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-/** MessageEntity. */
+/**
+ * MessageEntity.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table("chat_message")
 public class MessageEntity {
 
-  /** id. */
-  @Id private Long id;
+  /**
+   * id.
+   */
+  @Id
+  private Long id;
 
-  /** message. */
-  private String message;
-
-  /** sender. */
-  private String sender;
-
-  /** roomId. */
+  /**
+   * roomId.
+   */
   private Long roomId;
 
-  /** sendTime. */
+  /**
+   * message.
+   */
+  private String message;
+
+  /**
+   * sender.
+   */
+  private String sender;
+
+  /**
+   * destinationUser.
+   */
+  private String destinationUser;
+
+  /**
+   * sendTime.
+   */
   private Date sendTime;
 
-  /** updateMessageFlag. */
+  /**
+   * updateMessageFlag.
+   */
   private boolean updateMessageFlag;
 
   /**
@@ -40,7 +60,8 @@ public class MessageEntity {
    */
   public Message toDomainMessage() {
     return new Message(
-        this.id, this.message, this.sender, this.roomId, this.sendTime, this.updateMessageFlag);
+        this.id, this.roomId, this.message, this.sender, this.destinationUser, this.sendTime,
+        this.updateMessageFlag);
   }
 
   /**
@@ -52,9 +73,10 @@ public class MessageEntity {
   public MessageEntity build(final Message message) {
     return new MessageEntity(
         message.getId(),
-        message.getMessageText(),
-        message.getSender(),
         message.getRoomId(),
+        message.getMessage(),
+        message.getSender(),
+        message.getDestinationUser(),
         message.getSendTime(),
         message.isUpdateMessageFlag());
   }

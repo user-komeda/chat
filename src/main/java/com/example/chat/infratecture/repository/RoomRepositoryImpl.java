@@ -1,6 +1,5 @@
 package com.example.chat.infratecture.repository;
 
-import com.example.chat.apprication.resource.RoomBody;
 import com.example.chat.domain.object.Room;
 import com.example.chat.domain.repository.RoomRepository;
 import com.example.chat.infratecture.entity.RoomEntity;
@@ -12,13 +11,18 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-/** RoomRepository実装. */
+/**
+ * RoomRepository実装.
+ */
 @Repository
 @RequiredArgsConstructor
 public class RoomRepositoryImpl implements RoomRepository {
 
-  /** RoomJdbcRepository. */
-  @NonNull private RoomJdbcRepository roomJdbcRepository;
+  /**
+   * RoomJdbcRepository.
+   */
+  @NonNull
+  private RoomJdbcRepository roomJdbcRepository;
 
   /**
    * room一覧取得.
@@ -47,24 +51,24 @@ public class RoomRepositoryImpl implements RoomRepository {
   /**
    * room作成.
    *
-   * @param roomBody roomBody
+   * @param room room
    */
   @Override
-  public void save(final RoomBody roomBody) {
-    roomJdbcRepository
-        .save(new RoomEntity(roomBody.getId(), roomBody.getRoomName()))
+  public Room save(final Room room) {
+    return roomJdbcRepository
+        .save(RoomEntity.buildRoomEntity(room))
         .toDomainRoom();
   }
 
   /**
    * room編集.
    *
-   * @param id id
-   * @param roomBody roomBody
+   * @param id   id
+   * @param room room
    */
   @Override
-  public void save(final Long id, final RoomBody roomBody) {
-    roomJdbcRepository.save(new RoomEntity(id, roomBody.getRoomName())).toDomainRoom();
+  public Room save(final Long id, final Room room) {
+    return roomJdbcRepository.save(RoomEntity.buildRoomEntity(room)).toDomainRoom();
   }
 
   /**

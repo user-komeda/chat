@@ -6,13 +6,18 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/** 東麓処理serviceClass. */
+/**
+ * 東麓処理serviceClass.
+ */
 @NoArgsConstructor
 @Service
 public class SignupService {
 
-  /** UserRepository. */
-  @Autowired private transient UserRepository userRepository;
+  /**
+   * UserRepository.
+   */
+  @Autowired
+  private transient UserRepository userRepository;
 
   /**
    * ユーザ東麓処理.

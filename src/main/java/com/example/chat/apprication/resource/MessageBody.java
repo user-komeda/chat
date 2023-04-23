@@ -2,22 +2,49 @@ package com.example.chat.apprication.resource;
 
 import com.example.chat.domain.object.Message;
 import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
-/** MessageBody. */
+/**
+ * MessageBody.
+ */
 @Data
 public class MessageBody {
 
-  /** id. */
+  /**
+   * id.
+   */
   private Long id;
 
-  /** userName. */
-  private String userName;
+  /**
+   * roomId.
+   */
+  @NotNull
+  private Long roomId;
 
-  /** message. */
+  /**
+   * message.
+   */
+  @NotBlank
   private String message;
 
-  /** sendTime. */
+  /**
+   * sender.
+   */
+  @NotBlank
+  private String sender;
+
+  /**
+   * destinationUser.
+   */
+  private String destinationUser;
+
+
+  /**
+   * sendTime.
+   */
+  @NotNull
   private Date sendTime;
 
   /**
@@ -26,6 +53,7 @@ public class MessageBody {
    * @return DomainMessage
    */
   public Message toDomainMessage() {
-    return new Message(null, this.message, this.userName, this.id, this.sendTime, false);
+    return new Message(this.id, this.roomId, this.message, this.sender, this.destinationUser,
+        this.sendTime, false);
   }
 }
