@@ -35,8 +35,18 @@ public class UserRepositoryImpl implements UserRepository {
    * @return 東麓結果
    */
   @Override
+  public User save(final User user, final String encodePassword) {
+    return this.userJdbcRepository.save(UserEntity.buildUserEntity(user, encodePassword))
+        .toDomainUser();
+  }
+
+  @Override
   public User save(final User user) {
-    return this.userJdbcRepository
-        .save(UserEntity.buildUserEntity(user)).toDomainUser();
+    return this.userJdbcRepository.save(UserEntity.buildUserEntity(user)).toDomainUser();
+  }
+
+  @Override
+  public User findByVerificationCode(final String verificationCode) {
+    return this.userJdbcRepository.findByVerificationCode(verificationCode).toDomainUser();
   }
 }

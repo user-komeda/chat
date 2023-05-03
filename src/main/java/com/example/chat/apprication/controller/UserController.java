@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Validated
 public class UserController {
+
 
   /**
    * SignupService.
@@ -35,7 +39,18 @@ public class UserController {
    * @return 登録されたuser情報
    */
   @PostMapping("/signup")
-  public User signup(@RequestBody @Valid final UserBody userBody) {
+  public ResponseEntity<User> signup(@RequestBody @Valid final UserBody userBody) {
     return signupService.signup(userBody.toDomainUser());
+  }
+
+  /**
+   * mail認証.
+   *
+   * @param verificationCode 検証コード
+   * @return redirect
+   */
+  @GetMapping("/verify/{verificationCode}")
+  public ResponseEntity<String> verify(@PathVariable final String verificationCode) {
+    return signupService.verify(verificationCode);
   }
 }

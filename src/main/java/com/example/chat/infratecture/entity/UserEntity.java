@@ -1,6 +1,7 @@
 package com.example.chat.infratecture.entity;
 
 import com.example.chat.domain.object.User;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,12 +22,11 @@ public class UserEntity {
    * id.
    */
   @Id
-  private long id;
+  private Long id;
 
   /**
    * roomId.
    */
-  @Column("roomId")
   private Long roomId;
 
   /**
@@ -46,6 +46,29 @@ public class UserEntity {
   private String userName;
 
   /**
+   * verificationCode.
+   */
+  private String verificationCode;
+
+  /**
+   * isVerified.
+   */
+  @Column("isVerified")
+  private Boolean isVerified;
+
+  /**
+   * 変換処理.
+   *
+   * @param user           user
+   * @param encodePassword encodePassword
+   * @return userEntity
+   */
+  public static UserEntity buildUserEntity(final User user, final String encodePassword) {
+    return new UserEntity(user.getId(), user.getRoomId(), user.getEmail(), encodePassword,
+        user.getUserName(), UUID.randomUUID().toString(), false);
+  }
+
+  /**
    * 変換処理.
    *
    * @param user user
@@ -53,8 +76,9 @@ public class UserEntity {
    */
   public static UserEntity buildUserEntity(final User user) {
     return new UserEntity(user.getId(), user.getRoomId(), user.getEmail(), user.getPassword(),
-        user.getUserName());
+        user.getUserName(), UUID.randomUUID().toString(), true);
   }
+
 
   /**
    * domainのUserClassへの変換処理.
@@ -62,6 +86,7 @@ public class UserEntity {
    * @return com.example.chat.infrastructure.entity.UserEntity
    */
   public User toDomainUser() {
-    return new User(this.id, this.roomId, this.email, this.password, this.userName);
+    return new User(this.id, this.roomId, this.email, this.password, this.userName,
+        this.verificationCode, this.isVerified);
   }
 }

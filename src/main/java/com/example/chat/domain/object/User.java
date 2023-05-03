@@ -3,23 +3,46 @@ package com.example.chat.domain.object;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-/** userObject. */
+/**
+ * userObject.
+ */
 @Data
 @AllArgsConstructor
 public class User {
 
-  /** id. */
+  /**
+   * id.
+   */
   private Long id;
 
-  /** roomId. */
+  /**
+   * roomId.
+   */
   private Long roomId;
 
-  /** email. */
+  /**
+   * email.
+   */
   private String email;
 
-  /** password. */
+  /**
+   * password.
+   */
   private String password;
 
-  /** userName. */
+  /**
+   * userName.
+   */
   private String userName;
+
+  /**
+   * verificationCode.
+   */
+  private String verificationCode;
+
+  /**
+   * isVerified.
+   */
+  private Boolean isVerified;
+
 }

@@ -12,6 +12,7 @@ import lombok.Data;
 @Data
 public class UserBody {
 
+
   /**
    * id.
    */
@@ -20,7 +21,6 @@ public class UserBody {
   /**
    * roomId.
    */
-  @NotBlank
   private Long roomId;
 
   /**
@@ -38,10 +38,27 @@ public class UserBody {
   private String password;
 
   /**
+   * password確認.
+   */
+  @NotBlank
+  @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\-]{8,}$")
+  private String confirmPassword;
+
+  /**
    * userName.
    */
   @NotBlank
   private String userName;
+
+  /**
+   * verificationCode.
+   */
+  private String verificationCode;
+
+  /**
+   * isVerified.
+   */
+  private Boolean isVerified;
 
   /**
    * domain userClassに変換.
@@ -49,6 +66,7 @@ public class UserBody {
    * @return 返還後のuserObject
    */
   public User toDomainUser() {
-    return new User(this.id, this.roomId, this.email, this.password, this.userName);
+    return new User(this.id, this.roomId, this.email, this.password,
+        this.userName, this.verificationCode, isVerified);
   }
 }
