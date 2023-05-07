@@ -31,4 +31,10 @@ public interface UserRepository {
    * @return 検証済みuser
    */
   User findByVerificationCode(String verificationCode);
+
+  /**
+   * user取得.
+   */
+  User findByEmail(String email);
+
 }

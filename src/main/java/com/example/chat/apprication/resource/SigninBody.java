@@ -7,10 +7,10 @@ import javax.validation.constraints.Pattern;
 import lombok.Data;
 
 /**
- * userRequestObject.
+ * SigninBody.
  */
 @Data
-public class UserBody {
+public class SigninBody {
 
 
   /**

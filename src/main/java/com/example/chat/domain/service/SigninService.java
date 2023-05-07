@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  */
 @NoArgsConstructor
 @Service
-public class SignupService {
+public class SigninService {
 
   /**
    * PasswordEncoder.
@@ -45,7 +45,7 @@ public class SignupService {
    * @param user user
    * @return com.example.chat.domain.service.SignupService
    */
-  public ResponseEntity<User> signup(final User user) {
+  public ResponseEntity<User> signin(final User user) {
     final String encodedPassword = passwordEncoder.encode(user.getPassword());
     final User savedUser = userRepository.save(user, encodedPassword);
     this.sendSignupMaile(savedUser.getEmail(), savedUser.getVerificationCode());

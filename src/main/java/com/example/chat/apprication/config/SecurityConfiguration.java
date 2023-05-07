@@ -1,5 +1,7 @@
 package com.example.chat.apprication.config;
 
+import com.example.chat.apprication.filter.CheckTokenFilter;
+import com.example.chat.apprication.filter.UsernamePasswordAuthenticationFilterImpl;
 import java.util.List;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,11 +15,14 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-/** springSecurityConfig. */
+/**
+ * springSecurityConfig.
+ */
 @Configuration
 @EnableWebSecurity
 @NoArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
   /**
    * password encoder.
    *
@@ -30,10 +35,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
-    http.authorizeRequests().antMatchers("/").permitAll();
+    http.authorizeRequests().mvcMatchers("/signin", "/signup", "/verify/{verificationCode}")
+        .permitAll().anyRequest()
+        .authenticated();
+    http.addFilter(new UsernamePasswordAuthenticationFilterImpl(authenticationManager()));
+    http.addFilterAfter(new CheckTokenFilter(), UsernamePasswordAuthenticationFilterImpl.class);
     http.csrf().disable();
     http.cors();
   }
+
 
   /**
    * Cors設定.

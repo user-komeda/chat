@@ -1,6 +1,7 @@
 package com.example.chat.infratecture.repository;
 
 import com.example.chat.infratecture.entity.UserEntity;
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -14,5 +15,11 @@ public interface UserJdbcRepository extends CrudRepository<UserEntity, String> {
    * @param verificationCode 検証コード
    * @return 検証済みuser
    */
-  UserEntity findByVerificationCode(String verificationCode);
+  Optional<UserEntity> findByVerificationCode(String verificationCode);
+
+  /**
+   * user取得.
+   */
+  Optional<UserEntity> findByEmail(String email);
+
 }
