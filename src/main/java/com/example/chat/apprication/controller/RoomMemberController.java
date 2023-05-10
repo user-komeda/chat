@@ -1,6 +1,6 @@
 package com.example.chat.apprication.controller;
 
-import com.example.chat.apprication.resource.UserBody;
+import com.example.chat.apprication.resource.SigninBody;
 import com.example.chat.domain.object.User;
 import com.example.chat.domain.service.RoomMemberService;
 import java.util.List;
@@ -66,14 +66,14 @@ public class RoomMemberController {
   /**
    * ルーム内にメンバー東麓.
    *
-   * @param roomId   roomId
-   * @param userBody userBody
+   * @param roomId     roomId
+   * @param signinBody userBody
    */
   @PostMapping("/add")
   @ResponseStatus(HttpStatus.CREATED)
   public void addRoomMember(@PathVariable final Long roomId,
-      @Valid @RequestBody final UserBody userBody) {
-    roomMemberService.addRoomMember(roomId, userBody.toDomainUser());
+      @Valid @RequestBody final SigninBody signinBody) {
+    roomMemberService.addRoomMember(roomId, signinBody.toDomainUser());
   }
 
   /**

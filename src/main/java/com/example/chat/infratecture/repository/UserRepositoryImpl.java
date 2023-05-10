@@ -3,6 +3,7 @@ package com.example.chat.infratecture.repository;
 import com.example.chat.domain.object.User;
 import com.example.chat.domain.repository.UserRepository;
 import com.example.chat.infratecture.entity.UserEntity;
+import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,14 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   public User findByVerificationCode(final String verificationCode) {
-    return this.userJdbcRepository.findByVerificationCode(verificationCode).toDomainUser();
+    final Optional<UserEntity> userEntity = this.userJdbcRepository.findByVerificationCode(
+        verificationCode);
+    return userEntity.orElseThrow(RuntimeException::new).toDomainUser();
+  }
+
+  @Override
+  public User findByEmail(final String email) {
+    final Optional<UserEntity> userEntity = this.userJdbcRepository.findByEmail(email);
+    return userEntity.orElseThrow(RuntimeException::new).toDomainUser();
   }
 }

@@ -1,8 +1,8 @@
 package com.example.chat.apprication.controller;
 
-import com.example.chat.apprication.resource.UserBody;
+import com.example.chat.apprication.resource.SigninBody;
 import com.example.chat.domain.object.User;
-import com.example.chat.domain.service.SignupService;
+import com.example.chat.domain.service.SigninService;
 import javax.validation.Valid;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +23,24 @@ import org.springframework.web.bind.annotation.RestController;
 @NoArgsConstructor
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Validated
-public class UserController {
+public class SignInController {
 
 
   /**
    * SignupService.
    */
   @Autowired
-  private SignupService signupService;
+  private SigninService signinService;
 
   /**
    * ユーザ登録.
    *
-   * @param userBody userBody
+   * @param signinBody userBody
    * @return 登録されたuser情報
    */
-  @PostMapping("/signup")
-  public ResponseEntity<User> signup(@RequestBody @Valid final UserBody userBody) {
-    return signupService.signup(userBody.toDomainUser());
+  @PostMapping("/signin")
+  public ResponseEntity<User> signin(@RequestBody @Valid final SigninBody signinBody) {
+    return signinService.signin(signinBody.toDomainUser());
   }
 
   /**
@@ -51,6 +51,6 @@ public class UserController {
    */
   @GetMapping("/verify/{verificationCode}")
   public ResponseEntity<String> verify(@PathVariable final String verificationCode) {
-    return signupService.verify(verificationCode);
+    return signinService.verify(verificationCode);
   }
 }
