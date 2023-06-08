@@ -10,13 +10,18 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-/** MessageRepositoryImpl. */
+/**
+ * MessageRepositoryImpl.
+ */
 @RequiredArgsConstructor
 @Repository
 public class MessageRepositoryImpl implements MessageRepository {
 
-  /** messageJdbcRepository. */
-  @NonNull private MessageJdbcRepository messageJdbcRepository;
+  /**
+   * messageJdbcRepository.
+   */
+  @NonNull
+  private MessageJdbcRepository messageJdbcRepository;
 
   /**
    * メッセージ一覧の取得.
@@ -38,6 +43,6 @@ public class MessageRepositoryImpl implements MessageRepository {
    */
   @Override
   public void save(final Message message) {
-    messageJdbcRepository.save(new MessageEntity().build(message));
+    messageJdbcRepository.save(MessageEntity.build(message));
   }
 }

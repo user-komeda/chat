@@ -1,6 +1,7 @@
 package com.example.chat.apprication.config;
 
 import com.example.chat.apprication.filter.CheckTokenFilter;
+import com.example.chat.apprication.filter.ExceptionHndlerFilter;
 import com.example.chat.apprication.filter.UsernamePasswordAuthenticationFilterImpl;
 import java.util.List;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @NoArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+
   /**
    * password encoder.
    *
@@ -35,9 +37,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
-    http.authorizeRequests().mvcMatchers("/signin", "/signup", "/verify/{verificationCode}")
-        .permitAll().anyRequest()
-        .authenticated();
+    http.authorizeRequests()
+        .mvcMatchers("/signin", "/signup", "/verify/{verificationCode}", "/websocket", "/{id}")
+        .permitAll().anyRequest().authenticated();
+    http.addFilterBefore(new ExceptionHndlerFilter(),
+        UsernamePasswordAuthenticationFilterImpl.class);
     http.addFilter(new UsernamePasswordAuthenticationFilterImpl(authenticationManager()));
     http.addFilterAfter(new CheckTokenFilter(), UsernamePasswordAuthenticationFilterImpl.class);
     http.csrf().disable();
@@ -55,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     final var configuration = new CorsConfiguration();
 
     // Access-Control-Allow-Origin
-    configuration.setAllowedOriginPatterns(List.of("*"));
+    configuration.setAllowedOriginPatterns(List.of("http://localhost:5173"));
 
     // Access-Control-Allow-Methods
     configuration.setAllowedMethods(List.of("*"));

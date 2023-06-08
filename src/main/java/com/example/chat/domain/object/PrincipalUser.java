@@ -16,6 +16,7 @@ public class PrincipalUser implements Principal {
    */
   private final String userName;
 
+
   @Override
   public String getName() {
     return this.userName;

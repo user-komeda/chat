@@ -5,8 +5,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.example.chat.apprication.resource.SignupBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.time.Instant;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,12 +19,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 /**
  * UsernamePasswordAuthenticationFilterImpl.
  */
+
 public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAuthenticationFilter {
 
   /**
    * authenticationManager.
    */
-  private final transient AuthenticationManager authenticationManager;
+  private final AuthenticationManager authenticationManager;
+
 
   /**
    * constructor.
@@ -35,12 +40,22 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
     setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/signup", "POST"));
     setUsernameParameter("email");
     setPasswordParameter("password");
-
     this.setAuthenticationSuccessHandler((req, res, ex) -> {
-      final String token = JWT.create().withIssuer("com.example.chat")
-          .withClaim("username", ex.getName())
-          .sign(Algorithm.HMAC256("secret"));
-      res.setHeader("X-AUTH-TOKEN", token);
+      //有効期限30分
+      final String token = JWT.create().withIssuer("com.example.chat").withIssuedAt(Instant.now())
+          .withNotBefore(Instant.now()).withExpiresAt(Instant.now().plusSeconds(60 * 60 * 24 * 14))
+          .withClaim("username", ex.getName()).sign(Algorithm.HMAC256("secret"));
+      //有効期限14日
+      final String refreshToken = JWT.create().withIssuer("com.example.chat")
+          .withIssuedAt(Instant.now())
+          .withNotBefore(Instant.now()).withExpiresAt(Instant.now().plusSeconds(60 * 30))
+          .withClaim("username", ex.getName()).sign(Algorithm.HMAC256("secret"));
+      final ResponseCookie cookie = ResponseCookie.from("refreshToken",
+              refreshToken)
+          .httpOnly(true).path("/")
+          .build();
+      res.addHeader("X-AUTH-TOKEN", token);
+      res.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
       res.setHeader("Access-Control-Expose-Headers", "X-AUTH-TOKEN");
       res.setStatus(200);
     });

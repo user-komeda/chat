@@ -3,7 +3,6 @@ package com.example.chat.domain.object;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 /**
  * Message.
@@ -15,7 +14,6 @@ public class Message {
   /**
    * id.
    */
-  @Id
   private Long id;
 
   /**
