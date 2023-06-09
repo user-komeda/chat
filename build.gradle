@@ -70,10 +70,10 @@ spotbugs {
 tasks.named('test') {
     useJUnitPlatform()
 }
-//tasks.register('installLocalGitHook', Copy) {
-//    from new File(rootProject.rootDir, 'scripts/pre-commit')
-//    into { new File(rootProject.rootDir, '.git/hooks') }
-//    fileMode 0775
-//}
+tasks.register('installLocalGitHook', Copy) {
+    from new File(rootProject.rootDir, 'scripts/pre-commit')
+    into { new File(rootProject.rootDir, '.git/hooks') }
+    fileMode 0775
+}
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'

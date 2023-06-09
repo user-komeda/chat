@@ -3,6 +3,7 @@ package com.example.chat.apprication.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.chat.apprication.Exception.TokenNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -22,17 +23,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @AllArgsConstructor
 public class CheckTokenFilter extends OncePerRequestFilter {
 
-
   @Override
   protected void doFilterInternal(final HttpServletRequest request,
       final HttpServletResponse response,
       final FilterChain filterChain) throws ServletException, IOException {
     final String token = request.getHeader("X-AUTH-TOKEN");
-    System.out.println(token);
     //　トークンが無い場合は何もせずセッションの状態を維持しない
     if (!StringUtils.hasText(token)) {
-      filterChain.doFilter(request, response);
-      return;
+      throw new TokenNotFoundException("");
     }
     final DecodedJWT jwt = JWT.require(Algorithm.HMAC256("secret")).build().verify(token);
     final String email = Objects.requireNonNull(jwt).getClaim("email").toString();
@@ -45,7 +43,8 @@ public class CheckTokenFilter extends OncePerRequestFilter {
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
     System.out.println(request.getServletPath());
-    return request.getServletPath().equals("/refreshToken/");
+    return request.getServletPath().equals("/refreshToken/") || request.getServletPath()
+        .equals("/websocket");
   }
 }
 

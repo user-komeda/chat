@@ -58,4 +58,10 @@ public class UserRepositoryImpl implements UserRepository {
     final Optional<UserEntity> userEntity = this.userJdbcRepository.findByEmail(email);
     return userEntity.orElseThrow(RuntimeException::new).toDomainUser();
   }
+
+  @Override
+  public User findById(Long userId) {
+    final Optional<UserEntity> userEntity = this.userJdbcRepository.findById(userId);
+    return userEntity.orElseThrow(RuntimeException::new).toDomainUser();
+  }
 }

@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * springJDBCConfigClass.
  */
-public interface UserJdbcRepository extends CrudRepository<UserEntity, String> {
+public interface UserJdbcRepository extends CrudRepository<UserEntity, Long> {
 
   /**
    * user検証.

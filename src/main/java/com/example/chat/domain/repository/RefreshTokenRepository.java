@@ -21,6 +21,6 @@ public interface RefreshTokenRepository {
    * @param userId userId
    * @return refreshToken
    */
-  RefreshToken findByUserId(Long userId);
+  RefreshToken findByRefreshToken(String refreshtoken);
 
 }

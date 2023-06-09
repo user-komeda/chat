@@ -1,12 +1,10 @@
 package com.example.chat.apprication.controller;
 
+import com.example.chat.domain.object.RefreshToken;
 import com.example.chat.domain.service.CreateTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,20 +18,14 @@ public class RefreshTokenController {
   @GetMapping("/refreshToken")
   public ResponseEntity<String> createRefreshToken(
       @CookieValue("refreshToken") String refreshTokenCookie) {
-    System.out.println(refreshTokenCookie);
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-    boolean isVerify = createTokenService.verifyRefreshToken(refreshTokenCookie,
-        authentication.getName());
+    RefreshToken refreshToken = createTokenService.verifyRefreshToken(refreshTokenCookie);
 
-    if (isVerify) {
-      String refreshToken = createTokenService.crateRefreshToken(authentication);
-      String token = createTokenService.createToken(authentication);
-      return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshToken)
-          .header("X-AUTH-TOKEN", token).header("Access-Control-Expose-Headers", "X-AUTH-TOKEN")
-          .build();
-    }
-    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    String createdRefreshToken = createTokenService.createRefreshToken(refreshToken.getUserId());
+    String token = createTokenService.createToken(refreshToken.getUserId());
+    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, createdRefreshToken)
+        .header("X-AUTH-TOKEN", token).header("Access-Control-Expose-Headers", "X-AUTH-TOKEN")
+        .build();
   }
 
 }

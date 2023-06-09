@@ -28,8 +28,8 @@ public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
   }
 
   @Override
-  public RefreshToken findByUserId(Long userId) {
-    return refreshTokenJdbcRepository.findByUserId(userId)
+  public RefreshToken findByRefreshToken(String refreshToken) {
+    return refreshTokenJdbcRepository.findByRefreshToken(refreshToken)
         .orElseThrow(RuntimeException::new).toDomainRefreshToken();
   }
 }
