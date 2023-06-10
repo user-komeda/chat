@@ -76,6 +76,5 @@ task installLocalGitHook(type: Copy) {
     fileMode 0775
 }
 
-build.dependsOn installLocalGitHook
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
