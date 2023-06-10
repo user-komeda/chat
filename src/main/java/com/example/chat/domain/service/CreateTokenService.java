@@ -10,8 +10,6 @@ import com.example.chat.domain.repository.UserRepository;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.Arrays;
-import javax.servlet.http.Cookie;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,17 +23,30 @@ import org.springframework.stereotype.Service;
 public class CreateTokenService {
 
   /**
+   * ISSUER.
+   */
+  private static final String ISSUER = "com.example.chat";
+
+  /**
+   * USER_NAME_CLAIM.
+   */
+  private static final String USER_NAME_CLAIM = "username";
+
+  /**
+   * SECRET.
+   */
+  private static final String SECRET = "secret";
+
+  /**
    * RefreshTokenRepository.
    */
   @Autowired
   private transient RefreshTokenRepository refreshTokenRepository;
-
   /**
    * UserRepository.
    */
   @Autowired
   private transient UserRepository userRepository;
-
 
   /**
    * refreshToken作成.
@@ -43,14 +54,15 @@ public class CreateTokenService {
    * @param ex 認証情報
    * @return refreshToken
    */
-  public String crateRefreshToken(Authentication ex) {
+  public String crateRefreshToken(final Authentication ex) {
 
     //有効期限14日
-    String refreshToken = JWT.create().withIssuer("com.example.chat").withIssuedAt(Instant.now())
+    final String refreshToken = JWT.create().withIssuer(ISSUER)
+        .withIssuedAt(Instant.now())
         .withNotBefore(Instant.now()).withExpiresAt(Instant.now().plusSeconds(60 * 60 * 24 * 14))
-        .withClaim("username", ex.getName()).sign(Algorithm.HMAC256("secret"));
+        .withClaim(USER_NAME_CLAIM, ex.getName()).sign(Algorithm.HMAC256(SECRET));
 
-    Long userId = userRepository.findByEmail(ex.getName()).getId();
+    final Long userId = userRepository.findByEmail(ex.getName()).getId();
 
     return refreshTokenRepository.save(new RefreshToken(null, refreshToken, userId,
             LocalDate.ofInstant(Instant.now().plusSeconds(60 * 60 * 24 * 14), ZoneOffset.UTC)))
@@ -58,12 +70,19 @@ public class CreateTokenService {
 
   }
 
-  public String createRefreshToken(long userId) {
-    User user = userRepository.findById(userId);
+  /**
+   * リフレッシュトークン作成.
+   *
+   * @param userId ユーザID.
+   * @return refreshToken
+   */
+  public String createRefreshToken(final long userId) {
+    final User user = userRepository.findById(userId);
 
-    String refreshToken = JWT.create().withIssuer("com.example.chat").withIssuedAt(Instant.now())
+    final String refreshToken = JWT.create().withIssuer(ISSUER)
+        .withIssuedAt(Instant.now())
         .withNotBefore(Instant.now()).withExpiresAt(Instant.now().plusSeconds(60 * 60 * 24 * 14))
-        .withClaim("username", user.getEmail()).sign(Algorithm.HMAC256("secret"));
+        .withClaim(USER_NAME_CLAIM, user.getEmail()).sign(Algorithm.HMAC256(SECRET));
 
     return refreshTokenRepository.save(
             new RefreshToken(null, refreshToken, user.getId(),
@@ -77,34 +96,37 @@ public class CreateTokenService {
    * @param ex 認証情報
    * @return refreshToken
    */
-  public String createToken(Authentication ex) {
+  public String createToken(final Authentication ex) {
     //有効期限30分
-    return JWT.create().withIssuer("com.example.chat").withIssuedAt(Instant.now())
+    return JWT.create().withIssuer(ISSUER).withIssuedAt(Instant.now())
         .withNotBefore(Instant.now()).withExpiresAt(Instant.now().plusSeconds(60 * 30))
-        .withClaim("username", ex.getName()).sign(Algorithm.HMAC256("secret"));
-  }
-
-  public String createToken(long userId) {
-
-    User user = userRepository.findById(userId);
-
-    //有効期限30分
-    return JWT.create().withIssuer("com.example.chat").withIssuedAt(Instant.now())
-        .withNotBefore(Instant.now()).withExpiresAt(Instant.now().plusSeconds(60 * 30))
-        .withClaim("username", user.getEmail()).sign(Algorithm.HMAC256("secret"));
+        .withClaim(USER_NAME_CLAIM, ex.getName()).sign(Algorithm.HMAC256(SECRET));
   }
 
   /**
-   * @param cookies
-   * @return
+   * token作成.
+   *
+   * @param userId ユーザID
+   * @return token
    */
-  public String getRefreshTokenCookie(Cookie[] cookies) {
-    return Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("refreshToken"))
-        .findFirst().orElseThrow(RuntimeException::new).getValue();
+  public String createToken(final long userId) {
+
+    final User user = userRepository.findById(userId);
+
+    //有効期限30分
+    return JWT.create().withIssuer(ISSUER).withIssuedAt(Instant.now())
+        .withNotBefore(Instant.now()).withExpiresAt(Instant.now().plusSeconds(60 * 30))
+        .withClaim(USER_NAME_CLAIM, user.getEmail()).sign(Algorithm.HMAC256(SECRET));
   }
 
-  public RefreshToken verifyRefreshToken(String refreshToken) {
-    RefreshToken findedRefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken);
+  /**
+   * リフレッシュトークン検証.
+   *
+   * @param refreshToken リフレッシュトークン
+   * @return リフレッシュトークン
+   */
+  public RefreshToken verifyRefreshToken(final String refreshToken) {
+    final RefreshToken findedRefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken);
 
     if (!findedRefreshToken.isExpirationDate()) {
       throw new TokenExpiredException("トークンの有効期限が切れています",
@@ -113,6 +135,4 @@ public class CreateTokenService {
 
     return findedRefreshToken;
   }
-
-
 }

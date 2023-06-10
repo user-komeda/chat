@@ -25,9 +25,12 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
   /**
    * authenticationManager.
    */
-  private final AuthenticationManager authenticationManager;
+  private final transient AuthenticationManager authenticationManager;
 
-  private final CreateTokenService createTokenService;
+  /**
+   * CreateTokenService.
+   */
+  private final transient CreateTokenService createTokenService;
 
 
   /**
@@ -36,7 +39,7 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
    * @param authenticationManager authenticationManager.
    */
   public UsernamePasswordAuthenticationFilterImpl(
-      final AuthenticationManager authenticationManager, ApplicationContext context) {
+      final AuthenticationManager authenticationManager, final ApplicationContext context) {
     super();
     this.authenticationManager = authenticationManager;
     this.createTokenService = context.getBean(CreateTokenService.class);

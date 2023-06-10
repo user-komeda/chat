@@ -9,18 +9,18 @@ public interface RefreshTokenRepository {
 
 
   /**
-   * refreshTokenの保存
+   * refreshTokenの保存.
    *
    * @param refreshToken refreshToken.
    */
-  RefreshToken save(final RefreshToken refreshToken);
+  RefreshToken save(RefreshToken refreshToken);
 
   /**
    * userIdからrefreshToken検索.
    *
-   * @param userId userId
+   * @param refreshToken refreshtoken
    * @return refreshToken
    */
-  RefreshToken findByRefreshToken(String refreshtoken);
+  RefreshToken findByRefreshToken(String refreshToken);
 
 }

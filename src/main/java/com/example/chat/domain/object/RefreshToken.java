@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * RefreshToken/
+ * RefreshToken.
  */
 @AllArgsConstructor
 @Getter

@@ -9,6 +9,12 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface RefreshTokenJdbcRepository extends CrudRepository<RefreshTokenEntity, Long> {
 
+  /**
+   * リフレッシュトークン取得.
+   *
+   * @param refreshToken リフレッシュトークン
+   * @return リフレッシュトークン
+   */
   Optional<RefreshTokenEntity> findByRefreshToken(String refreshToken);
 
 }

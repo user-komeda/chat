@@ -9,6 +9,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+/**
+ * RefreshTokenEntity.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,13 +19,25 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("refresh_token")
 public class RefreshTokenEntity {
 
+  /**
+   * id.
+   */
   @Id
   private Long id;
 
+  /**
+   * refreshToken.
+   */
   private String refreshToken;
 
+  /**
+   * userId.
+   */
   private Long userId;
 
+  /**
+   * expirationDate.
+   */
   private LocalDate expirationDate;
 
   /**

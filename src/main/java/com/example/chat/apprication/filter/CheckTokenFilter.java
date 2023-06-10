@@ -3,7 +3,7 @@ package com.example.chat.apprication.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.chat.apprication.Exception.TokenNotFoundException;
+import com.example.chat.apprication.exception.TokenNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -41,10 +41,9 @@ public class CheckTokenFilter extends OncePerRequestFilter {
   }
 
   @Override
-  protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-    System.out.println(request.getServletPath());
-    return request.getServletPath().equals("/refreshToken/") || request.getServletPath()
-        .equals("/websocket");
+  protected boolean shouldNotFilter(final HttpServletRequest request) throws ServletException {
+    return "/refreshToken/".equals(request.getServletPath()) || "/websocket"
+        .equals(request.getServletPath());
   }
 }
 

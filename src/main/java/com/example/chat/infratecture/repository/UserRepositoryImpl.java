@@ -60,7 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public User findById(Long userId) {
+  public User findById(final Long userId) {
     final Optional<UserEntity> userEntity = this.userJdbcRepository.findById(userId);
     return userEntity.orElseThrow(RuntimeException::new).toDomainUser();
   }

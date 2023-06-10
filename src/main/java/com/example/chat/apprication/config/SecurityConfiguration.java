@@ -1,9 +1,10 @@
 package com.example.chat.apprication.config;
 
 import com.example.chat.apprication.filter.CheckTokenFilter;
-import com.example.chat.apprication.filter.ExceptionHndlerFilter;
+import com.example.chat.apprication.filter.ExceptionHandlerFilter;
 import com.example.chat.apprication.filter.UsernamePasswordAuthenticationFilterImpl;
 import java.util.List;
+import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  */
 @Configuration
 @EnableWebSecurity
+@NoArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
@@ -38,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()
         .mvcMatchers("/signin", "/signup", "/verify/{verificationCode}", "/websocket", "/{id}")
         .permitAll().anyRequest().authenticated();
-    http.addFilterBefore(new ExceptionHndlerFilter(),
+    http.addFilterBefore(new ExceptionHandlerFilter(),
         UsernamePasswordAuthenticationFilterImpl.class);
     http.addFilter(new UsernamePasswordAuthenticationFilterImpl(authenticationManager(),
         getApplicationContext()));

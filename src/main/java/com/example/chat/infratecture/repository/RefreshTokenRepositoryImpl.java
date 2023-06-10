@@ -22,13 +22,13 @@ public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
   private final RefreshTokenJdbcRepository refreshTokenJdbcRepository;
 
   @Override
-  public RefreshToken save(RefreshToken refreshToken) {
+  public RefreshToken save(final RefreshToken refreshToken) {
     return refreshTokenJdbcRepository.save(RefreshTokenEntity.build(refreshToken))
         .toDomainRefreshToken();
   }
 
   @Override
-  public RefreshToken findByRefreshToken(String refreshToken) {
+  public RefreshToken findByRefreshToken(final String refreshToken) {
     return refreshTokenJdbcRepository.findByRefreshToken(refreshToken)
         .orElseThrow(RuntimeException::new).toDomainRefreshToken();
   }
