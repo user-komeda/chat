@@ -37,4 +37,12 @@ public interface UserRepository {
    */
   User findByEmail(String email);
 
+  /**
+   * ユーザー取得.
+   *
+   * @param userId ユーザID
+   * @return ユーザー
+   */
+  User findById(Long userId);
+
 }

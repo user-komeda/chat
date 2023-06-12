@@ -54,23 +54,12 @@ public class MessageEntity {
   private boolean updateMessageFlag;
 
   /**
-   * MessageEntityをDomain配下のMessageに変換.
-   *
-   * @return Domain配下のMessage
-   */
-  public Message toDomainMessage() {
-    return new Message(
-        this.id, this.roomId, this.message, this.sender, this.destinationUser, this.sendTime,
-        this.updateMessageFlag);
-  }
-
-  /**
    * DomainMessageからMessageEntity作成.
    *
    * @param message DomainMessage
    * @return MessageEntity
    */
-  public MessageEntity build(final Message message) {
+  public static MessageEntity build(final Message message) {
     return new MessageEntity(
         message.getId(),
         message.getRoomId(),
@@ -79,5 +68,16 @@ public class MessageEntity {
         message.getDestinationUser(),
         message.getSendTime(),
         message.isUpdateMessageFlag());
+  }
+
+  /**
+   * MessageEntityをDomain配下のMessageに変換.
+   *
+   * @return Domain配下のMessage
+   */
+  public Message toDomainMessage() {
+    return new Message(
+        this.id, this.roomId, this.message, this.sender, this.destinationUser, this.sendTime,
+        this.updateMessageFlag);
   }
 }
