@@ -46,7 +46,7 @@ public class ForgetPasswordService {
    */
   public ResponseEntity<String> sendChangePasswordMail(final String email) {
     final User user = userRepository.findByEmail(email);
-    userRepository.save(user);
+    final User savedUser = userRepository.save(user);
     final MimeMessage message = sender.createMimeMessage();
     final String fromEmail = "shigoto922@gmail.com";
     try {
@@ -60,7 +60,7 @@ public class ForgetPasswordService {
           + "<body>"
           + "<h3>Hello " + email + "</h3>"
           + "<div>以下のurlをクリックしてパスワードを変更してください</div>"
-          + "<a href=http://localhost:8080/changePassword/" + user.getVerificationCode()
+          + "<a href=http://localhost:5173/changePassword/" + savedUser.getVerificationCode()
           + ">パスワード変更</a>"
           + "</body>"
           + "</html>";

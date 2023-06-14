@@ -1,10 +1,10 @@
 package com.example.chat.apprication.controller;
 
+import com.example.chat.apprication.anotation.Email;
 import com.example.chat.apprication.request.ChangePasswordRequest;
 import com.example.chat.domain.service.ForgetPasswordService;
+import java.util.Map;
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -39,8 +39,8 @@ public class ForgetPasswordController {
    */
   @PostMapping("/forgetPassword")
   public ResponseEntity<String> sendChangePasswordMail(
-      @Valid @RequestBody @NotBlank @Email final String email) {
-    return forgetPasswordService.sendChangePasswordMail(email);
+      @Valid @RequestBody @Email final Map<String, String> email) {
+    return forgetPasswordService.sendChangePasswordMail(email.get("email"));
   }
 
   /**
@@ -56,6 +56,5 @@ public class ForgetPasswordController {
       @PathVariable final String verificationCode) {
     return forgetPasswordService.changePassword(changePasswordRequest.toDomainUser(),
         verificationCode);
-
   }
 }

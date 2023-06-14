@@ -1,4 +1,4 @@
-package com.example.chat.apprication.resource;
+package com.example.chat.apprication.request;
 
 
 import com.example.chat.domain.object.Room;
@@ -6,10 +6,10 @@ import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
- * roomBodyObject.
+ * RoomRequest.
  */
 @Data
-public class RoomBody {
+public class RoomRequest {
 
   /**
    * roomId.

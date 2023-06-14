@@ -1,6 +1,6 @@
 package com.example.chat.apprication.filter;
 
-import com.example.chat.apprication.resource.SignupBody;
+import com.example.chat.apprication.request.SignupRequest;
 import com.example.chat.domain.service.CreateTokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
       // 有効期限14日
       final String refreshToken = createTokenService.crateRefreshToken(ex);
       final ResponseCookie cookie = ResponseCookie.from("refreshToken",
-          refreshToken)
+              refreshToken)
           .httpOnly(true).path("/")
           .build();
       res.setHeader("X-AUTH-TOKEN", token);
@@ -70,8 +70,8 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
       final HttpServletResponse response) {
     try {
       // あとで作成するLoginFormクラスを、リクエストのパラメータとマッピングして作成する
-      final SignupBody body = new ObjectMapper().readValue(request.getInputStream(),
-          SignupBody.class);
+      final SignupRequest body = new ObjectMapper().readValue(request.getInputStream(),
+          SignupRequest.class);
       // 作成したLoginFormクラスの内容でログインの実行をする
       return this.authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword()));

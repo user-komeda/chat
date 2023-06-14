@@ -1,6 +1,6 @@
 package com.example.chat.apprication.controller;
 
-import com.example.chat.apprication.resource.SigninBody;
+import com.example.chat.apprication.request.SigninRequest;
 import com.example.chat.domain.object.User;
 import com.example.chat.domain.service.SigninService;
 import javax.validation.Valid;
@@ -35,12 +35,12 @@ public class SignInController {
   /**
    * ユーザ登録.
    *
-   * @param signinBody userBody
+   * @param signinRequest signinRequest
    * @return 登録されたuser情報
    */
   @PostMapping("/signin")
-  public ResponseEntity<User> signin(@RequestBody @Valid final SigninBody signinBody) {
-    return signinService.signin(signinBody.toDomainUser());
+  public ResponseEntity<User> signin(@RequestBody @Valid final SigninRequest signinRequest) {
+    return signinService.signin(signinRequest.toDomainUser());
   }
 
   /**

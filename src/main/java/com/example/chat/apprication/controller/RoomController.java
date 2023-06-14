@@ -1,6 +1,6 @@
 package com.example.chat.apprication.controller;
 
-import com.example.chat.apprication.resource.RoomBody;
+import com.example.chat.apprication.request.RoomRequest;
 import com.example.chat.domain.object.Room;
 import com.example.chat.domain.service.RoomService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -63,24 +63,24 @@ public class RoomController {
   /**
    * room作成.
    *
-   * @param roomBody roomBody
+   * @param roomRequest roomRequest
    */
   @PostMapping("/create")
-  public ResponseEntity<Room> createRoom(@Valid @RequestBody final RoomBody roomBody)
+  public ResponseEntity<Room> createRoom(@Valid @RequestBody final RoomRequest roomRequest)
       throws JsonProcessingException {
-    return roomService.createRoom(roomBody.toDomainRoom());
+    return roomService.createRoom(roomRequest.toDomainRoom());
   }
 
   /**
    * room編集.
    *
-   * @param id       id
-   * @param roomBody roomBody
+   * @param id          id
+   * @param roomRequest roomRequest
    */
   @PatchMapping("/create/{id}")
   public ResponseEntity<Room> editRoomById(
-      @PathVariable final Long id, @Valid @RequestBody final RoomBody roomBody) {
-    return roomService.editRoomById(id, roomBody.toDomainRoom());
+      @PathVariable final Long id, @Valid @RequestBody final RoomRequest roomRequest) {
+    return roomService.editRoomById(id, roomRequest.toDomainRoom());
   }
 
   /**

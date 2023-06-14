@@ -1,4 +1,4 @@
-package com.example.chat.apprication.resource;
+package com.example.chat.apprication.request;
 
 import com.example.chat.domain.object.User;
 import javax.validation.constraints.Email;
@@ -7,10 +7,10 @@ import javax.validation.constraints.Pattern;
 import lombok.Data;
 
 /**
- * SignupBody.
+ * SignupRequest.
  */
 @Data
-public class SignupBody {
+public class SignupRequest {
 
   /**
    * email.

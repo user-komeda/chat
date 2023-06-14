@@ -7,10 +7,21 @@ import javax.validation.constraints.Pattern;
 import lombok.Data;
 
 /**
- * ChangePasswordRequest.
+ * SigninBody.
  */
 @Data
-public class ChangePasswordRequest {
+public class SigninRequest {
+
+
+  /**
+   * id.
+   */
+  private Long id;
+
+  /**
+   * roomId.
+   */
+  private Long roomId;
 
   /**
    * email.
@@ -27,18 +38,35 @@ public class ChangePasswordRequest {
   private String password;
 
   /**
-   * password.
+   * password確認.
    */
   @NotBlank
   @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\-]{8,}$")
   private String confirmPassword;
 
   /**
-   * user変換.
+   * userName.
+   */
+  @NotBlank
+  private String userName;
+
+  /**
+   * verificationCode.
+   */
+  private String verificationCode;
+
+  /**
+   * isVerified.
+   */
+  private Boolean isVerified;
+
+  /**
+   * domain userClassに変換.
    *
-   * @return user
+   * @return 返還後のuserObject
    */
   public User toDomainUser() {
-    return new User(null, null, this.email, this.password, null, null, null);
+    return new User(this.id, this.roomId, this.email, this.password,
+        this.userName, this.verificationCode, isVerified);
   }
 }

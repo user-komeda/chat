@@ -1,4 +1,4 @@
-package com.example.chat.apprication.resource;
+package com.example.chat.apprication.request;
 
 import com.example.chat.domain.object.Message;
 import java.util.Date;
@@ -7,10 +7,10 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * MessageBody.
+ * MessageRequest.
  */
 @Data
-public class MessageBody {
+public class MessageRequest {
 
   /**
    * id.

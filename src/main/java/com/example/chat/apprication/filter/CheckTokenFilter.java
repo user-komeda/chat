@@ -6,6 +6,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.chat.apprication.exception.TokenNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -22,6 +25,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
  */
 @AllArgsConstructor
 public class CheckTokenFilter extends OncePerRequestFilter {
+
+  /**
+   * スキップurl.
+   */
+  private static final List<String> SKIP_URL = Arrays.asList("/signin", "/refreshToken/",
+      "/websocket",
+      "/verify/{verificationCode}");
 
   @Override
   protected void doFilterInternal(final HttpServletRequest request,
@@ -42,7 +52,7 @@ public class CheckTokenFilter extends OncePerRequestFilter {
 
   @Override
   protected boolean shouldNotFilter(final HttpServletRequest request) throws ServletException {
-    return "/refreshToken/".equals(request.getServletPath()) || "/websocket"
-        .equals(request.getServletPath());
+    final AntPathMatcher pathMatcher = new AntPathMatcher();
+    return SKIP_URL.stream().anyMatch((url) -> pathMatcher.match(url, request.getServletPath()));
   }
 }
