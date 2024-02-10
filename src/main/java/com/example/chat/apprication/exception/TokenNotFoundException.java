@@ -1,11 +1,15 @@
 package com.example.chat.apprication.exception;
 
+import java.io.Serial;
+
 /**
  * TokenNotFoundException.
  */
 public class TokenNotFoundException extends RuntimeException {
 
-  private static final long serialVersionUID = -3584744917248121265L;
+
+  @Serial
+  private static final long serialVersionUID = -8432890787348521928L;
 
   /**
    * コンストラクタ.

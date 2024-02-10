@@ -4,17 +4,20 @@ import com.example.chat.domain.object.User;
 import com.example.chat.domain.repository.RoomMemberRepository;
 import java.util.List;
 import java.util.Optional;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-/** RoomMemberService. */
-@NoArgsConstructor
+/**
+ * RoomMemberService.
+ */
+@RequiredArgsConstructor
 @Service
 public class RoomMemberService {
 
-  /** RoomMemberRepository. */
-  @Autowired private transient RoomMemberRepository roomMemberRepository;
+  /**
+   * RoomMemberRepository.
+   */
+  private final transient RoomMemberRepository roomMemberRepository;
 
   /**
    * ルーム内のすべてのメンバ取得.
@@ -30,7 +33,7 @@ public class RoomMemberService {
    * ルーム内の指定したメンバ取得.
    *
    * @param roomId roomId
-   * @param id id
+   * @param id     id
    * @return user
    */
   public Optional<User> getRoomMemberById(final Long roomId, final Long id) {
@@ -41,7 +44,7 @@ public class RoomMemberService {
    * ルーム内にメンバ登録.
    *
    * @param roomId rooId
-   * @param user user
+   * @param user   user
    */
   public void addRoomMember(final Long roomId, final User user) {
     roomMemberRepository.save(roomId, user);

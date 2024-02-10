@@ -5,7 +5,9 @@ import java.util.Optional;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
-/** RoomMemberJdbcRepository. */
+/**
+ * RoomMemberJdbcRepository.
+ */
 public interface RoomMemberJdbcRepository extends CrudRepository<UserEntity, Long> {
 
   /**
@@ -17,7 +19,7 @@ public interface RoomMemberJdbcRepository extends CrudRepository<UserEntity, Lon
   @Query(
       "SELECT * "
           + "FROM CHAT_USER "
-          + "INNER JOIN CHAT_ROOM ON CHAT_USER.roomId=CHAT_ROOM.id "
+          + "INNER JOIN CHAT_ROOM ON CHAT_USER.room_id=CHAT_ROOM.id "
           + "WHERE CHAT_ROOM.id=:roomId")
   Iterable<UserEntity> findAll(Long roomId);
 
@@ -25,7 +27,7 @@ public interface RoomMemberJdbcRepository extends CrudRepository<UserEntity, Lon
    * ルーム内指定したメンバ取得.
    *
    * @param roomId roomId
-   * @param id id
+   * @param id     id
    * @return user
    */
   @Query(
@@ -38,9 +40,9 @@ public interface RoomMemberJdbcRepository extends CrudRepository<UserEntity, Lon
   /**
    * ルーム内にメンバ登録.
    *
-   * @param id id
-   * @param roomId roomId
-   * @param email email
+   * @param id       id
+   * @param roomId   roomId
+   * @param email    email
    * @param password password
    * @param userName userName
    */

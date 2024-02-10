@@ -8,16 +8,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-/** RoomMemberRepositoryImpl. */
+/**
+ * RoomMemberRepositoryImpl.
+ */
 @Repository
 @RequiredArgsConstructor
 public class RoomMemberRepositoryImpl implements RoomMemberRepository {
 
-  /** RoomMemberJdbcRepository. */
-  @Autowired private RoomMemberJdbcRepository roomMemberJdbcRepository;
+  /**
+   * RoomMemberJdbcRepository.
+   */
+  private final RoomMemberJdbcRepository roomMemberJdbcRepository;
 
   /**
    * ルーム内すべてのメンバ取得.
@@ -37,7 +40,7 @@ public class RoomMemberRepositoryImpl implements RoomMemberRepository {
    * ルーム内指定したメンバ取得.
    *
    * @param roomId roomId
-   * @param id id
+   * @param id     id
    * @return user
    */
   @Override
@@ -49,7 +52,7 @@ public class RoomMemberRepositoryImpl implements RoomMemberRepository {
    * ルーム内にメンバ登録.
    *
    * @param roomId roomId
-   * @param user user
+   * @param user   user
    */
   @Override
   public void save(final Long roomId, final User user) {

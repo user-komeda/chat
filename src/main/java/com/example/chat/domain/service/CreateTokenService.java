@@ -10,15 +10,14 @@ import com.example.chat.domain.repository.UserRepository;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 /**
  * CreateTokenService.
  */
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class CreateTokenService {
 
@@ -40,13 +39,11 @@ public class CreateTokenService {
   /**
    * RefreshTokenRepository.
    */
-  @Autowired
-  private transient RefreshTokenRepository refreshTokenRepository;
+  private final transient RefreshTokenRepository refreshTokenRepository;
   /**
    * UserRepository.
    */
-  @Autowired
-  private transient UserRepository userRepository;
+  private final transient UserRepository userRepository;
 
   /**
    * refreshToken作成.

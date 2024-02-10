@@ -69,7 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     configuration.setAllowedHeaders(List.of("*"));
 
     // Access-Control-Allow-Credentials
-    configuration.setAllowCredentials(true);
+    configuration.setAllowCredentials(Boolean.TRUE);
 
     final var source = new UrlBasedCorsConfigurationSource();
 

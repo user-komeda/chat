@@ -4,8 +4,7 @@ import com.example.chat.domain.object.User;
 import com.example.chat.domain.repository.UserRepository;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,26 +16,23 @@ import org.springframework.stereotype.Service;
  * ForgetPasswordService.
  */
 @Service
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class ForgetPasswordService {
 
   /**
    * JavaMailSender.
    */
-  @Autowired
-  private transient JavaMailSender sender;
+  private final transient JavaMailSender sender;
 
   /**
    * UserRepository.
    */
-  @Autowired
-  private transient UserRepository userRepository;
+  private final transient UserRepository userRepository;
 
   /**
    * PasswordEncoder.
    */
-  @Autowired
-  private transient PasswordEncoder passwordEncoder;
+  private final transient PasswordEncoder passwordEncoder;
 
   /**
    * パスワード変更メール送信.
@@ -44,34 +40,31 @@ public class ForgetPasswordService {
    * @param email email
    * @return httpStatus200
    */
-  public ResponseEntity<String> sendChangePasswordMail(final String email) {
+  public ResponseEntity<String> sendChangePasswordMail(final String email)
+      throws MessagingException {
     final User user = userRepository.findByEmail(email);
     final User savedUser = userRepository.save(user);
     final MimeMessage message = sender.createMimeMessage();
     final String fromEmail = "shigoto922@gmail.com";
-    try {
-      //送信情報設定
-      final MimeMessageHelper helper = new MimeMessageHelper(message, true);
-      helper.setFrom(fromEmail);
-      helper.setTo(email);
-      helper.setSubject("本登録メール");
-      final String insertMessage = "<html>"
-          + "<head></head>"
-          + "<body>"
-          + "<h3>Hello " + email + "</h3>"
-          + "<div>以下のurlをクリックしてパスワードを変更してください</div>"
-          + "<a href=http://localhost:5173/changePassword/" + savedUser.getVerificationCode()
-          + ">パスワード変更</a>"
-          + "</body>"
-          + "</html>";
+    //送信情報設定
+    final MimeMessageHelper helper = new MimeMessageHelper(message, true);
+    helper.setFrom(fromEmail);
+    helper.setTo(email);
+    helper.setSubject("本登録メール");
+    final String insertMessage = "<html>"
+        + "<head></head>"
+        + "<body>"
+        + "<h3>Hello " + email + "</h3>"
+        + "<div>以下のurlをクリックしてパスワードを変更してください</div>"
+        + "<a href=http://localhost:5173/changePassword/" + savedUser.getVerificationCode()
+        + ">パスワード変更</a>"
+        + "</body>"
+        + "</html>";
 
-      helper.setText(insertMessage, true);
-      //メール送信
-      sender.send(message);
-      return ResponseEntity.status(HttpStatus.OK).build();
-    } catch (MessagingException e) {
-      throw new UnsupportedOperationException(e);
-    }
+    helper.setText(insertMessage, true);
+    //メール送信
+    sender.send(message);
+    return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   /**

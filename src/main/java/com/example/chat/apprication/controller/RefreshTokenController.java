@@ -2,8 +2,7 @@ package com.example.chat.apprication.controller;
 
 import com.example.chat.domain.object.RefreshToken;
 import com.example.chat.domain.service.CreateTokenService;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -14,14 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
  * RefreshTokenController.
  */
 @RestController
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class RefreshTokenController {
 
   /**
    * CreateTokenService.
    */
-  @Autowired
-  private transient CreateTokenService createTokenService;
+  private final transient CreateTokenService createTokenService;
 
   /**
    * リフレッシュトークン作成.

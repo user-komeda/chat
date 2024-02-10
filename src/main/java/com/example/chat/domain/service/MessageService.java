@@ -3,17 +3,20 @@ package com.example.chat.domain.service;
 import com.example.chat.domain.object.Message;
 import com.example.chat.domain.repository.MessageRepository;
 import java.util.List;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-/** MessageService. */
-@NoArgsConstructor
+/**
+ * MessageService.
+ */
+@RequiredArgsConstructor
 @Service
 public class MessageService {
 
-  /** messageRepository. */
-  @Autowired private transient MessageRepository messageRepository;
+  /**
+   * messageRepository.
+   */
+  private final transient MessageRepository messageRepository;
 
   /**
    * メッセージの保存.

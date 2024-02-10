@@ -44,5 +44,4 @@ public class User {
    * isVerified.
    */
   private Boolean isVerified;
-
 }
