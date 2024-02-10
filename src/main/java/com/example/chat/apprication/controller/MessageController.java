@@ -5,8 +5,7 @@ import com.example.chat.domain.object.Message;
 import com.example.chat.domain.service.MessageService;
 import java.util.List;
 import javax.validation.Valid;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * MessageController.
  */
 @RestController
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Validated
 public class MessageController {
@@ -28,14 +27,12 @@ public class MessageController {
   /**
    * SimpMessagingTemplate.
    */
-  @Autowired
-  private SimpMessagingTemplate simpMessagingTemplate;
+  private final transient SimpMessagingTemplate simpMessagingTemplate;
 
   /**
    * SaveMessageService .
    */
-  @Autowired
-  private MessageService messageService;
+  private final transient MessageService messageService;
 
   /**
    * ルームあてのメッセージを処理.

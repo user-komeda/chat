@@ -27,6 +27,7 @@ public class UserEntity {
   /**
    * roomId.
    */
+  @Column("room_id")
   private Long roomId;
 
   /**
@@ -65,7 +66,7 @@ public class UserEntity {
    */
   public static UserEntity buildUserEntity(final User user, final String encodePassword) {
     return new UserEntity(user.getId(), user.getRoomId(), user.getEmail(), encodePassword,
-        user.getUserName(), UUID.randomUUID().toString(), false);
+        user.getUserName(), UUID.randomUUID().toString(), Boolean.FALSE);
   }
 
   /**
@@ -76,7 +77,7 @@ public class UserEntity {
    */
   public static UserEntity buildUserEntity(final User user) {
     return new UserEntity(user.getId(), user.getRoomId(), user.getEmail(), user.getPassword(),
-        user.getUserName(), UUID.randomUUID().toString(), true);
+        user.getUserName(), UUID.randomUUID().toString(), Boolean.TRUE);
   }
 
 

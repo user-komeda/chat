@@ -6,7 +6,6 @@ import com.example.chat.infratecture.entity.MessageEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -20,8 +19,7 @@ public class MessageRepositoryImpl implements MessageRepository {
   /**
    * messageJdbcRepository.
    */
-  @NonNull
-  private MessageJdbcRepository messageJdbcRepository;
+  private final MessageJdbcRepository messageJdbcRepository;
 
   /**
    * メッセージ一覧の取得.

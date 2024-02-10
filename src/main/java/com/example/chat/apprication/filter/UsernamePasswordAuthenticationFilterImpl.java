@@ -18,8 +18,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 /**
  * UsernamePasswordAuthenticationFilterImpl.
  */
-
-public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAuthenticationFilter {
+public final class UsernamePasswordAuthenticationFilterImpl extends
+    UsernamePasswordAuthenticationFilter {
 
   /**
    * authenticationManager.

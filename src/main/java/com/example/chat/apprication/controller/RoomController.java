@@ -7,8 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -30,15 +29,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/room")
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Validated
 public class RoomController {
 
   /**
    * roomService.
    */
-  @Autowired
-  private transient RoomService roomService;
+  private final transient RoomService roomService;
 
   /**
    * すべてのルームを取得.

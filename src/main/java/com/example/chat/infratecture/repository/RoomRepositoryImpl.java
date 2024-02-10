@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -21,8 +20,7 @@ public class RoomRepositoryImpl implements RoomRepository {
   /**
    * RoomJdbcRepository.
    */
-  @NonNull
-  private RoomJdbcRepository roomJdbcRepository;
+  private final RoomJdbcRepository roomJdbcRepository;
 
   /**
    * room一覧取得.

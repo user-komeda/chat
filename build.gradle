@@ -1,15 +1,20 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.3'
+    id 'org.springframework.boot' version '2.7.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'checkstyle'
     id 'pmd'
-    id "com.github.spotbugs" version "5.0.14"
+    id "com.github.spotbugs" version "6.0.7"
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 configurations {
     compileOnly {
@@ -36,7 +41,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    spotbugsPlugins 'com.mebigfatguy.fb-contrib:fb-contrib:7.4.7'
+    spotbugsPlugins 'com.mebigfatguy.sb-contrib:sb-contrib:7.6.4'
 
 }
 
@@ -58,14 +63,9 @@ spotbugs {
     ignoreFailures = false
     showStackTraces = true
     showProgress = true
-    effort = 'default'
-    reportLevel = 'default'
-    visitors = ['FindSqlInjection', 'SwitchFallthrough']
-    omitVisitors = ['FindNonShortCircuit']
-    maxHeapSize = '1g'
-    extraArgs = ['-nested:false']
-    jvmArgs = ['-Duser.language=ja']
+    excludeFilter = file("/src/main/resources/excludeFilter.xml")
 }
+
 
 tasks.named('test') {
     useJUnitPlatform()
@@ -74,6 +74,18 @@ tasks.register('installLocalGitHook', Copy) {
     from new File(rootProject.rootDir, 'scripts/pre-commit')
     into { new File(rootProject.rootDir, '.git/hooks') }
     fileMode 0775
+}
+
+tasks.spotbugsMain {
+    reports.create("html") {
+        required = true
+        outputLocation = file("$buildDir/reports/spotbugs/spotbugs.html")
+        setStylesheet("fancy-hist.xsl")
+    }
+    reports.create("xml") {
+        required = true
+        outputLocation = file("$buildDir/reports/spotbugs/spotbugs.xml")
+    }
 }
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'

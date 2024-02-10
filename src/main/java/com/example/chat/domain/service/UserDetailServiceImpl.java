@@ -3,8 +3,8 @@ package com.example.chat.domain.service;
 import com.example.chat.domain.object.User;
 import com.example.chat.domain.repository.UserRepository;
 import java.util.ArrayList;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
  * UserDetailServiceImpl.
  */
 @Service
-@NoArgsConstructor
-public class UserDetailServiceImpl implements UserDetailsService {
+@RequiredArgsConstructor
+public final class UserDetailServiceImpl implements UserDetailsService {
 
   /**
    * UserRepository.
    */
-  @Autowired
-  private UserRepository userRepository;
+  @NonNull
+  private final UserRepository userRepository;
 
   /**
    * loadUserByUsername.

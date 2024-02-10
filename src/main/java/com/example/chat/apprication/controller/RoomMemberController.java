@@ -6,8 +6,7 @@ import com.example.chat.domain.service.RoomMemberService;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * RoomMemberController.
  */
 @RestController
-@NoArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/room/{roomId}/member")
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Validated
@@ -34,8 +33,7 @@ public class RoomMemberController {
   /**
    * RoomMemberService.
    */
-  @Autowired
-  private transient RoomMemberService roomMemberService;
+  private final RoomMemberService roomMemberService;
 
   /**
    * ルーム内のメンバー一覧を取得.

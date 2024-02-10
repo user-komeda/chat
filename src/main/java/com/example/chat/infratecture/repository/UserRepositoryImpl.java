@@ -4,10 +4,7 @@ import com.example.chat.domain.object.User;
 import com.example.chat.domain.repository.UserRepository;
 import com.example.chat.infratecture.entity.UserEntity;
 import java.util.Optional;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,14 +17,7 @@ public class UserRepositoryImpl implements UserRepository {
   /**
    * UserJdbcRepository.
    */
-  @NonNull
-  private UserJdbcRepository userJdbcRepository;
-
-  /**
-   * PasswordEncoder.
-   */
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+  private final UserJdbcRepository userJdbcRepository;
 
   /**
    * ユーザ情報東麓.

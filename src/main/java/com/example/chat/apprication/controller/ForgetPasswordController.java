@@ -4,9 +4,9 @@ import com.example.chat.apprication.anotation.Email;
 import com.example.chat.apprication.request.ChangePasswordRequest;
 import com.example.chat.domain.service.ForgetPasswordService;
 import java.util.Map;
+import javax.mail.MessagingException;
 import javax.validation.Valid;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * ForgetPasswordController.
  */
 @RestController
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Validated
 public class ForgetPasswordController {
@@ -28,8 +28,7 @@ public class ForgetPasswordController {
   /**
    * ForgetPasswordService.
    */
-  @Autowired
-  private ForgetPasswordService forgetPasswordService;
+  private final ForgetPasswordService forgetPasswordService;
 
   /**
    * パスワード変更メール送信.
@@ -39,7 +38,7 @@ public class ForgetPasswordController {
    */
   @PostMapping("/forgetPassword")
   public ResponseEntity<String> sendChangePasswordMail(
-      @Valid @RequestBody @Email final Map<String, String> email) {
+      @Valid @RequestBody @Email final Map<String, String> email) throws MessagingException {
     return forgetPasswordService.sendChangePasswordMail(email.get("email"));
   }
 
