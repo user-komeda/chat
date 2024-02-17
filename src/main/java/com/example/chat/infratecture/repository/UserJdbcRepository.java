@@ -22,4 +22,12 @@ public interface UserJdbcRepository extends CrudRepository<UserEntity, Long> {
    */
   Optional<UserEntity> findByEmail(String email);
 
+
+  /**
+   * ユーザ存在チェック.
+   *
+   * @param email email
+   * @return ユーザ存在しているかどうか
+   */
+  boolean existsByEmail(String email);
 }

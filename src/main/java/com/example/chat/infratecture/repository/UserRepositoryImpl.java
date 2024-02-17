@@ -3,6 +3,7 @@ package com.example.chat.infratecture.repository;
 import com.example.chat.domain.object.User;
 import com.example.chat.domain.repository.UserRepository;
 import com.example.chat.infratecture.entity.UserEntity;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -53,5 +54,11 @@ public class UserRepositoryImpl implements UserRepository {
   public User findById(final Long userId) {
     final Optional<UserEntity> userEntity = this.userJdbcRepository.findById(userId);
     return userEntity.orElseThrow(RuntimeException::new).toDomainUser();
+  }
+
+  @Override
+  public boolean existsByEmail(final String email) {
+    Objects.requireNonNull(email);
+    return this.userJdbcRepository.existsByEmail(email);
   }
 }

@@ -1,5 +1,6 @@
 package com.example.chat.domain.service;
 
+import com.example.chat.apprication.exception.UserDeduplicateException;
 import com.example.chat.domain.object.User;
 import com.example.chat.domain.repository.UserRepository;
 import javax.mail.MessagingException;
@@ -42,6 +43,9 @@ public class SigninService {
    * @return com.example.chat.domain.service.SignupService
    */
   public ResponseEntity<User> signin(final User user) throws MessagingException {
+    if (userRepository.existsByEmail(user.getEmail())) {
+      throw new UserDeduplicateException("ユーザーは既に存在しています");
+    }
     final String encodedPassword = passwordEncoder.encode(user.getPassword());
     final User savedUser = userRepository.save(user, encodedPassword);
     this.sendSignupMaile(savedUser.getEmail(), savedUser.getVerificationCode());
