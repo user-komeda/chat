@@ -12,5 +12,8 @@
   <Match>
     <Bug pattern="EI_EXPOSE_REP2"/>
   </Match>
+  <Match>
+    <Bug pattern="IMC_IMMATURE_CLASS_BAD_SERIALVERSIONUID"/>
+  </Match>
 
 </FindBugsFilter>

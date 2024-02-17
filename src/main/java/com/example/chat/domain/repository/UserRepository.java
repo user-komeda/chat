@@ -45,4 +45,12 @@ public interface UserRepository {
    */
   User findById(Long userId);
 
+  /**
+   * ユーザ存在チェック.
+   *
+   * @param email email
+   * @return 存在しているかどうか
+   */
+  boolean existsByEmail(String email);
+
 }
