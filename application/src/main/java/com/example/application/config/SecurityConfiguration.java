@@ -4,12 +4,16 @@ import com.example.application.filter.CheckTokenFilter;
 import com.example.application.filter.ExceptionHandlerFilter;
 import com.example.application.filter.UsernamePasswordAuthenticationFilterImpl;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter.Directive;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -24,9 +28,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
+    final HeaderWriterLogoutHandler clearSiteData = new HeaderWriterLogoutHandler(
+        new ClearSiteDataHeaderWriter(
+            Directive.ALL));
     http.authorizeRequests()
         .mvcMatchers("/signin", "/signup", "/verify/{verificationCode}", "/websocket", "/{id}")
         .permitAll().anyRequest().authenticated();
+    http
+        .logout((logout) -> logout.addLogoutHandler(clearSiteData).logoutUrl("/logout")
+            .logoutSuccessHandler((request, response, authentication) -> {
+              response.setStatus(HttpServletResponse.SC_OK);
+            })
+            .clearAuthentication(true).permitAll());
     http.addFilterBefore(new ExceptionHandlerFilter(),
         UsernamePasswordAuthenticationFilterImpl.class);
     http.addFilter(new UsernamePasswordAuthenticationFilterImpl(authenticationManager(),

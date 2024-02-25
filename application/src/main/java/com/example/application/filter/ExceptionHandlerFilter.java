@@ -20,7 +20,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
    * TOKEN_NOT_FOUNT_EXCEPTION_NAME.
    */
   private static final String TOKEN_NOT_FOUNT_EXCEPTION_NAME =
-      "com.example.chat.apprication.exception.TokenNotFoundException";
+      "com.example.domain.exception.TokenNotFoundException";
 
   @Override
   protected void doFilterInternal(final HttpServletRequest request,

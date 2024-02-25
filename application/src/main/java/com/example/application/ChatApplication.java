@@ -10,7 +10,7 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
  */
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"com.example.application", "com.example.domain",
-    "com.example.infratecture"})
+    "com.example.infratecture", "com.example.utils"})
 @EnableJdbcRepositories("com.example.infratecture")
 public final class ChatApplication {
 

@@ -8,4 +8,5 @@ plugins {
 dependencies {
     implementation(project(":domain"))
     runtimeOnly(project(":infratecture"))
+    implementation(project(":utils"))
 }
