@@ -4,10 +4,14 @@ plugins {
     id("java-common-conventions")
     id("org.springframework.boot")
     id("io.spring.dependency-management")
+    id("org.flywaydb.flyway")
+
 }
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
+    google()
 }
 
 dependencies {
@@ -25,4 +29,10 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+}
+
+flyway {
+    url = "jdbc:mysql://localhost:3306/mysql"
+    user = "root"
+    password = "eIQnClX9IBgyRDP"
 }
