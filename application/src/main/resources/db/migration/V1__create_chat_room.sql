@@ -1,3 +1,4 @@
+drop table if exists chat_room CASCADE;
 CREATE TABLE `chat_room` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `room_name` varchar(255) DEFAULT NULL COMMENT 'room_name',
