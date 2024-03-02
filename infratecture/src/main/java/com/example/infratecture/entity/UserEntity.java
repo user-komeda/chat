@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 /**
@@ -27,7 +26,6 @@ public class UserEntity {
   /**
    * roomId.
    */
-  @Column("room_id")
   private Long roomId;
 
   /**
@@ -43,7 +41,6 @@ public class UserEntity {
   /**
    * userName.
    */
-  @Column("userName")
   private String userName;
 
   /**
@@ -54,7 +51,6 @@ public class UserEntity {
   /**
    * isVerified.
    */
-  @Column("isVerified")
   private Boolean isVerified;
 
   /**
